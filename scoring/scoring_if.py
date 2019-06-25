@@ -15,7 +15,7 @@ parser.add_argument('-B')
 parser.add_argument('-f')
 args = parser.parse_args()
 
-sampling_rate = args.B
+beat = args.B
 wav_filepath = args.f
 
 
