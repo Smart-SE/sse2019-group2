@@ -19,19 +19,19 @@ sampling_rate = args.B
 wav_filepath = args.f
 
 
-#���J���񃂃W���[�����s�ӏ�
+#奥谷さんスコアリングモジュール実行箇所
 
 
-#�g�c�͏��߂ĂŐ��x�łȂ��Ǝv���̂ŁA�؂藣����悤��
+#吉田は初めてで精度でないと思うので、切り離せるように
 if y_flg = True:
-    y_score =
+    y_score = (吉田スコアリングモジュール実行)
 
-    #���Ϗ���
-    ave_score = ({���J����X�R�A} + y_score)/2
+    #平均処理
+    ave_score = ({奥谷さんスコア} + y_score)/2
 
     return ave_score
 
-return {���J����X�R�A}
+return {奥谷さんスコア}
 
 #End
 
