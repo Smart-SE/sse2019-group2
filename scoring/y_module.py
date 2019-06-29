@@ -59,6 +59,10 @@ def predict_score(b= 120 ,filepath = None)
     samling_rate =  int(sr_ef *(tenpo/kijun))
     X_pred = []   
     try:
+        #モデルのロード
+        
+        
+        
         shs, fs = load_wave_data("100_flog_01.wav")
         melsp = calculate_melsp(shs)
         # 注意　
