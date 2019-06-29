@@ -5,7 +5,8 @@ import argparse
 import sys
 import traceback
 import numpy as np
-import matplotlib.pyplot as plt
+import pickle
+
 import keras
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
@@ -24,6 +25,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 kijun = 60
 sr_ef = 200
 width = 46
+modelfilepath = "/usr/bin/y_model.pickle"
 
 def load_wave_data(file_name):
     file_path = os.path.join(WAV_DIR, file_name) #推論時はファイルパスまんま渡されるはず。
@@ -45,7 +47,7 @@ def min_max(x, axis=None):
 def rangecontrol(i):
     #print(i)
     if i > 100 :
-        ten=100-(i - 100)
+        ten = 100-(i - 100)
         return int(ten)
     elif i < 0 :
         ten = 0 + (-1 * i)
@@ -53,19 +55,18 @@ def rangecontrol(i):
     else:
       return int(i)
 
-
 def predict_score(b= 120 ,filepath = None)
     score = None
     samling_rate =  int(sr_ef *(tenpo/kijun))
     X_pred = []   
     try:
         #モデルのロード
-        
-        
-        
-        shs, fs = load_wave_data("100_flog_01.wav")
+        with open(modelfilepath, 'rb') as f:
+            model = pickle.load(f)
+
+        shs, fs = load_wave_data(filepath)
         melsp = calculate_melsp(shs)
-        # 注意　
+        # 注意　widthは要調整
         if melsp.shape[1] > width:
             melsp_new = melsp[:,0:width]
         else:
@@ -76,9 +77,7 @@ def predict_score(b= 120 ,filepath = None)
         X_pred.append(melsp_reg_ndary_reshape)
         
         pred= model.predict(X_pred)
-   
-        pred_score_tmp = pred[0]
-        henkou_score = rangecontrol(pred_score_tmp)
+        henkou_score = rangecontrol(pred[0])
         return henkou_score
     except:
         print("ERROR")
@@ -97,7 +96,6 @@ if __name__ == '__main__'
     args = parser.parse_args()
     beat = args.B
     wav_filepath = args.f
-
     return predict_score(b= beat,filepath = wav_filepath)
 
 #End
