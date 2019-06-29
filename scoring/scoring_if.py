@@ -3,6 +3,7 @@
 
 import argparse
 import subprocess
+import y_module
 
 
 #parameter
@@ -25,7 +26,7 @@ o_score = int(o_score_consoleoutput.split()[1])
 #吉田は初めてで精度でないと思うので、切り離せるように
 if y_flg = True:
     y_score = 50 #(吉田スコアリングモジュール実行)→暫定的に50を入れています
-
+    # y_score = y_module.predict_score(b= beat,)
     #平均処理
     ave_score = (o_score + y_score)/2
 
