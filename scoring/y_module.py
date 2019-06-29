@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-
+import sys
+import traceback
 
 def predict_score(b= 60 ,filepath = None)
 
@@ -13,7 +14,9 @@ def predict_score(b= 60 ,filepath = None)
     
     except:
         print("ERROR")
-
+        traceback.print_exc()   
+        pass
+    
     finally:
         return score
 
