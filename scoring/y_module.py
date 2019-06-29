@@ -25,12 +25,10 @@ kijun = 60
 sr_ef = 200
 width = 46
 
-
 def load_wave_data(file_name):
     file_path = os.path.join(WAV_DIR, file_name) #推論時はファイルパスまんま渡されるはず。
     shs, fs = librosa.load(file_path, sr=samling_rate)
     return shs,fs
-
 
 def calculate_melsp(x, n_fft=2048, hop_length=128):
     stft = np.abs(librosa.stft(x, n_fft=n_fft, hop_length=hop_length))**2
@@ -44,14 +42,22 @@ def min_max(x, axis=None):
     result = (x-min)/(max-min)
     return result
 
+def rangecontrol(i):
+    #print(i)
+    if i > 100 :
+        ten=100-(i - 100)
+        return int(ten)
+    elif i < 0 :
+        ten = 0 + (-1 * i)
+        return int(ten)
+    else:
+      return int(i)
+
+
 def predict_score(b= 120 ,filepath = None)
     score = None
-
     samling_rate =  int(sr_ef *(tenpo/kijun))
-    
-    
-    X_pred = []
-    
+    X_pred = []   
     try:
         shs, fs = load_wave_data("100_flog_01.wav")
         melsp = calculate_melsp(shs)
@@ -63,12 +69,13 @@ def predict_score(b= 120 ,filepath = None)
    
         melsp_reg_ndary = min_max(melsp_new)
         melsp_reg_ndary_reshape = np.expand_dims(melsp_reg_ndary, axis=-1)
-       
         X_pred.append(melsp_reg_ndary_reshape)
-    
-    try:
-    
-    
+        
+        pred= model.predict(X_pred)
+   
+        pred_score_tmp = pred[0]
+        henkou_score = rangecontrol(pred_score_tmp)
+        return henkou_score
     except:
         print("ERROR")
         traceback.print_exc()   
