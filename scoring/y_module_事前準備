@@ -1,0 +1,4 @@
+必要ライブラリのインスト－ル
+手動で実施を想定
+
+pip install librosa
