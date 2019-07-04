@@ -5,6 +5,7 @@
 pip install  argparse
 pip install TensorFlow
 pip install keras
+pip install numpy
 pip install librosa
 
 
