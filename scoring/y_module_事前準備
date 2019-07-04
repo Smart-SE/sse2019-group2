@@ -24,5 +24,5 @@ root@e2d45950ffe8:~/smartSE# chmod u+rwx scoring_if.py
 root@e2d45950ffe8:~/smartSE# chmod u+rwx y_model.pickle
 root@e2d45950ffe8:~/smartSE# chmod u+rwx y_module.py
 
-4.y_model.pickleのフルパスをy_module.pyに定義する（早退パスで動いたのでいらないかも）
+4.y_model.pickleのフルパスをy_module.pyに定義する（相対パスで動いたので、別に不要かも。念のため記載）
 
