@@ -18,7 +18,8 @@ import librosa
 #param define
 kijun = 100
 width = 800
-modelfilepath = "/root/smartSE/y_model.pickle"
+#modelfilepath = "/root/smartSE/y_model.pickle"
+modelfilepath = "./y_model.pickle"
 henkou_score = None
 
 
