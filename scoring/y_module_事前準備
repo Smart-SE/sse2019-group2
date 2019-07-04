@@ -13,8 +13,16 @@ pip install librosa
 import pickle
 import traceback
 
-2.権限付与
+2. /usr/binに置く　(別にどこでも良い)
+・scoring_if.py
+・y_model.pickle
+・y_module.py
+・きっと　奥谷さんモジュールも　（要確認）
+
+3.権限付与
 root@e2d45950ffe8:~/smartSE# chmod u+rwx scoring_if.py
 root@e2d45950ffe8:~/smartSE# chmod u+rwx y_model.pickle
 root@e2d45950ffe8:~/smartSE# chmod u+rwx y_module.py
+
+4.y_model.pickleのフルパスをy_module.pyに定義する（早退パスで動いたのでいらないかも）
 
