@@ -1,4 +1,13 @@
 必要ライブラリのインスト－ル
 手動で実施を想定
 
+
+pip install  argparse
+pip install TensorFlow
+pip install keras
 pip install librosa
+
+
+以下はたぶんある？
+import pickle
+import traceback
