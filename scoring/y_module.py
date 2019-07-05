@@ -62,10 +62,11 @@ def predict_score(b = 100 ,file_path = None):
         else:
             CQ_spectro_new = CQ_spectro 
 
-        CQ_spectro_reg_ndary  =min_max(CQ_spectro_new)
+        CQ_spectro_reg_ndary = min_max(CQ_spectro_new)
         CQ_spectro_ndary_reshape = np.expand_dims(CQ_spectro_reg_ndary, axis=-1)
         X_pred.append(CQ_spectro_ndary_reshape)
-        X_pred_npary = np.array(X_pred)        
+        X_pred_npary = np.array(X_pred)
+        
         # predict
         pred= model.predict(X_pred_npary)
         henkou_score = rangecontrol(pred[0])
@@ -87,6 +88,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     beat = args.B
     wav_filepath = args.f
-    y_score = predict_score(b= beat, file_path = wav_filepath)
+    y_score = predict_score(b = beat, file_path = wav_filepath)
     exit(y_score)
 #End
