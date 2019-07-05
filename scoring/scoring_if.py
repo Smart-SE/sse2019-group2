@@ -26,7 +26,6 @@ if y_flg == True:
     y_score = y_module.predict_score(b = beat, file_path = wav_filepath)
     #エラーハンドリング
     #ちゃんと値が返ったら平均、無いなら奥谷さんスコアそのまま返す
-    #y_score = 30 
     if y_score != None:
         #平均処理
         ave_score = int((o_score + y_score)/2)
