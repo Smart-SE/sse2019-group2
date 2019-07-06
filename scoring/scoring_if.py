@@ -4,11 +4,12 @@
 import argparse
 import subprocess
 import random
+import os
 
 #param
 y_flg = True
-
-
+#とりあえず/root下に置くと仮定
+score_file_dir = "/root/"
 
 def scoring(wav_filepath: str, beat: str):
     if y_flg:
@@ -17,23 +18,24 @@ def scoring(wav_filepath: str, beat: str):
         o_score = int(o_score_consoleoutput.split()[1])
         return o_score
     else:
-    # 回避策用
+    # 回避策用。 3段階、各段階20点幅でランダマイズ
         y_score = None
         try:
-            y_score = y_module.predict_score(b=beat, file_path=wav_filepath)
-            
+            if os.path.exists(os.path.join(score_file_dir, "s-100")) : 
+                y_score = random.randint(80, 100)
+            elif os.path.exists(os.path.join(score_file_dir, "s-60")) :  
+                y_score = random.randint(50, 70)
+            elif os.path.exists(os.path.join(score_file_dir, "s-20")) :  
+                y_score = random.randint(10, 30)
+            else: 
+  
+            retrun y_score
         except:
-            pass 
-        
-        
-        if y_score is not None:
-            return y_score
-        else:
-            #ランダマイズ
-            return random.randint(0, 100)
-
+            pass
+        finally:
+            #何かあっても適当に返す。
+            return random.randint(40, 70)          
 # End
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
