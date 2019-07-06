@@ -4,8 +4,7 @@
 import argparse
 import subprocess
 
-import y_module
-
+y_flg = True
 
 def scoring(wav_filepath: str, beat: str, y_flg=True):
     o_score_consoleoutput = subprocess.check_output(
