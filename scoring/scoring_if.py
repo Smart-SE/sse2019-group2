@@ -3,10 +3,14 @@
 
 import argparse
 import subprocess
+import random
 
+#param
 y_flg = True
 
-def scoring(wav_filepath: str, beat: str, y_flg=True):
+
+
+def scoring(wav_filepath: str, beat: str):
     if y_flg:
         o_score_consoleoutput = subprocess.check_output(
             ['Rscript', 'scoring_098.R', beat, wav_filepath], stderr=subprocess.DEVNULL)
@@ -17,14 +21,16 @@ def scoring(wav_filepath: str, beat: str, y_flg=True):
         y_score = None
         try:
             y_score = y_module.predict_score(b=beat, file_path=wav_filepath)
+            
         except:
             pass 
+        
+        
         if y_score is not None:
-            # 平
             return y_score
         else:
             #ランダマイズ
-            return y_score
+            return random.randint(0, 100)
 
 # End
 
@@ -39,6 +45,5 @@ if __name__ == "__main__":
     beat = args.B
     wav_filepath = args.f
 
-    y_flg = True
-    score = scoring(wav_filepath, beat, y_flg)
+    score = scoring(wav_filepath, beat)
     print(score)
