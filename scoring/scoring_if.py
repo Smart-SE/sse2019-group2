@@ -28,12 +28,12 @@ def scoring(wav_filepath: str, beat: str):
             elif os.path.exists(os.path.join(score_file_dir, "s-20")) :  
                 y_score = random.randint(10, 30)
             else: 
-  
+                raise FileNotFoundError
             retrun y_score
         except:
             pass
         finally:
-            #何かあっても適当に返す。
+            #何かあっても適当に中間的な値を返す。
             return random.randint(40, 70)          
 # End
 
