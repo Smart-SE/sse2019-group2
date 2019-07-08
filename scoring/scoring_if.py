@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -8,7 +9,7 @@ import os
 #param
 y_flg = True
 #とりあえず/root下に置くと仮定
-score_file_dir = "/root/"
+score_file_dir = "/root/smartSE/"
 
 def scoring(wav_filepath: str, beat: str):
     if y_flg:
@@ -27,13 +28,16 @@ def scoring(wav_filepath: str, beat: str):
                 y_score = random.randint(10, 30)
             else:
                 raise FileNotFoundError
-
+            #raise ValueError
             return y_score
 
-        except:
-            #何か返して、pass する？　raiseする？　デモを考慮して、要確認
+        except FileNotFoundError:
+            #debugの時切り分けようにFileNotFoundErrorはメッセージをprint
+            print("score file not found")
             return random.randint(40, 70)
-            #raise
+            pass
+        except:
+            return random.randint(40, 70)
             pass
 
 # End
