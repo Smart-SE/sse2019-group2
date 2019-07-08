@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -7,7 +6,7 @@ import random
 import os
 
 #param
-y_flg = True
+y_flg = False
 #とりあえず/root下に置くと仮定
 score_file_dir = "/root/"
 
@@ -18,23 +17,25 @@ def scoring(wav_filepath: str, beat: str):
         o_score = int(o_score_consoleoutput.split()[1])
         return o_score
     else:
-    # 回避策用。 3段階、各段階20点幅でランダマイズ
         y_score = None
         try:
-            if os.path.exists(os.path.join(score_file_dir, "s-100")) : 
+            if os.path.exists(os.path.join(score_file_dir, "s-100")) :
                 y_score = random.randint(80, 100)
-            elif os.path.exists(os.path.join(score_file_dir, "s-60")) :  
+            elif os.path.exists(os.path.join(score_file_dir, "s-60")) :
                 y_score = random.randint(50, 70)
-            elif os.path.exists(os.path.join(score_file_dir, "s-20")) :  
+            elif os.path.exists(os.path.join(score_file_dir, "s-20")) :
                 y_score = random.randint(10, 30)
-            else: 
+            else:
                 raise FileNotFoundError
-            retrun y_score
+
+            return y_score
+
         except:
+            #何か返して、pass する？　raiseする？　デモを考慮して、要確認
+            return random.randint(40, 70)
+            #raise
             pass
-        finally:
-            #何かあっても適当に中間的な値を返す。
-            return random.randint(40, 70)          
+
 # End
 
 if __name__ == "__main__":
