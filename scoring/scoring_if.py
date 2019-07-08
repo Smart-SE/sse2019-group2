@@ -6,7 +6,7 @@ import random
 import os
 
 #param
-y_flg = False
+y_flg = True
 #とりあえず/root下に置くと仮定
 score_file_dir = "/root/"
 
