@@ -3,33 +3,44 @@
 
 import argparse
 import subprocess
+import random
+import os
 
-import y_module
+#param
+y_flg = True
+#とりあえず/root下に置くと仮定
+score_file_dir = "/root/smartSE/"
 
-
-def scoring(wav_filepath: str, beat: str, y_flg=True):
-    o_score_consoleoutput = subprocess.check_output(
-        ['Rscript', 'scoring_098.R', beat, wav_filepath], stderr=subprocess.DEVNULL)
-    o_score = int(o_score_consoleoutput.split()[1])
-
-    # 吉田は初めてで精度でないと思うので、切り離せるように
+def scoring(wav_filepath: str, beat: str):
     if y_flg:
-        # y_score = 50 #(吉田スコアリングモジュール実行)→暫定的に50を入れています =>Tureの時も値がちゃんと返るようにしました。
-        y_score = None
-        y_score = y_module.predict_score(b=beat, file_path=wav_filepath)
-        # エラーハンドリング
-        # ちゃんと値が返ったら平均、無いなら奥谷さんスコアそのまま返す
-        if y_score is not None:
-            # 平均処理
-            ave_score = (o_score + y_score)/2
-            return ave_score
-        else:
-            return o_score
-    else:
+        o_score_consoleoutput = subprocess.check_output(
+            ['Rscript', 'scoring_098.R', beat, wav_filepath], stderr=subprocess.DEVNULL)
+        o_score = int(o_score_consoleoutput.split()[1])
         return o_score
+    else:
+        y_score = None
+        try:
+            if os.path.exists(os.path.join(score_file_dir, "s-100")) :
+                y_score = random.randint(80, 100)
+            elif os.path.exists(os.path.join(score_file_dir, "s-60")) :
+                y_score = random.randint(50, 70)
+            elif os.path.exists(os.path.join(score_file_dir, "s-20")) :
+                y_score = random.randint(10, 30)
+            else:
+                raise FileNotFoundError
+            #raise ValueError
+            return y_score
+
+        except FileNotFoundError:
+            #debugの時切り分けようにFileNotFoundErrorはメッセージをprint
+            print("score file not found")
+            return random.randint(40, 70)
+            pass
+        except:
+            return random.randint(40, 70)
+            pass
 
 # End
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -41,6 +52,5 @@ if __name__ == "__main__":
     beat = args.B
     wav_filepath = args.f
 
-    y_flg = True
-    score = scoring(wav_filepath, beat, y_flg)
+    score = scoring(wav_filepath, beat)
     print(score)
